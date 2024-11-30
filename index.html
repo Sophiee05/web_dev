@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form with Real-Time Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="radio"],
+        .form-group input[type="checkbox"] {
+            width: auto;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .summary-container {
+            margin: 20px auto;
+            width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .summary-container h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age">
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <input type="radio" name="gender" value="Male"> Male
+                <input type="radio" name="gender" value="Female"> Female
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country">
+                    <option value="">Select your country</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="UK">UK</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="terms"> I agree to the terms and conditions
+            </div>
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Form Summary -->
+    <div class="summary-container">
+        <h3>Form Summary</h3>
+        <p><strong>Name:</strong> <span id="summaryName">N/A</span></p>
+        <p><strong>Email:</strong> <span id="summaryEmail">N/A</span></p>
+        <p><strong>Password:</strong> <span id="summaryPassword">N/A</span></p>
+        <p><strong>Confirm Password:</strong> <span id="summaryConfirmPassword">N/A</span></p>
+        <p><strong>Age:</strong> <span id="summaryAge">N/A</span></p>
+        <p><strong>Gender:</strong> <span id="summaryGender">N/A</span></p>
+        <p><strong>Country:</strong> <span id="summaryCountry">N/A</span></p>
+        <p><strong>Terms Accepted:</strong> <span id="summaryTerms">No</span></p>
+    </div>
+
+    <script>
+        // Update the form summary in real-time
+        function updateSummary() {
+            document.getElementById('summaryName').innerText = document.getElementById('name').value || "N/A";
+            document.getElementById('summaryEmail').innerText = document.getElementById('email').value || "N/A";
+            document.getElementById('summaryPassword').innerText = document.getElementById('password').value ? "••••••••" : "N/A";
+            document.getElementById('summaryConfirmPassword').innerText = document.getElementById('confirmPassword').value ? "••••••••" : "N/A";
+            document.getElementById('summaryAge').innerText = document.getElementById('age').value || "N/A";
+
+            const gender = document.querySelector('input[name="gender"]:checked');
+            document.getElementById('summaryGender').innerText = gender ? gender.value : "N/A";
+
+            const country = document.getElementById('country').value;
+            document.getElementById('summaryCountry').innerText = country || "N/A";
+
+            const terms = document.getElementById('terms').checked;
+            document.getElementById('summaryTerms').innerText = terms ? "Yes" : "No";
+        }
+
+        // Attach event listeners to update summary dynamically
+        document.addEventListener('DOMContentLoaded', () => {
+            const formElements = document.querySelectorAll('#registrationForm input, #registrationForm select');
+            formElements.forEach(element => {
+                element.addEventListener('input', updateSummary);
+                element.addEventListener('change', updateSummary);
+            });
+
+            // Handle form submission
+            document.getElementById('registrationForm').addEventListener('submit', (e) => {
+                e.preventDefault(); // Prevent actual form submission
+                alert("Form successfully submitted! Check the summary for details.");
+            });
+        });
+    </script>
+</body>
+</html>
